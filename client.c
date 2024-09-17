@@ -67,8 +67,6 @@ int main(int argc, char *argv[])
     /* Receive and print response from the server */
     read(clientSock, rcvBuf, sizeof(rcvBuf) - 1);
 
-    printf("This is message: %s\n", rcvBuf);
-
     printf("%s\n", studentName);
     printf("Transformed input is: ");
     for(i = 0; i < MDLEN; i++) printf("%02x", rcvBuf[i]);

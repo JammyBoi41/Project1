@@ -61,8 +61,6 @@ int main(int argc, char *argv[])
 
 	/* Accept incoming connection */
     clientSock = accept(serverSock, (struct sockaddr * ) &changeClntAddr, &clntLen);
-    const char* message = "Fuck you";
-    send(clientSock, message, strlen(message), 0);
 
 	/* Extract Your Name from the packet, store in nameBuf */
 	/*	FILL IN	    */
@@ -81,6 +79,7 @@ int main(int argc, char *argv[])
 
 	/* Return md_value to client */
 	/*	FILL IN	    */
+    send(clientSock, md_value, strlen(md_value), 0);
     }
 
 }
