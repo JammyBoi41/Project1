@@ -7,7 +7,8 @@
 #################################################################
 
 CC=gcc
-
+CFLAGS += -I/opt/homebrew/opt/openssl@3/include
+LDFLAGS += -L/opt/homebrew/opt/openssl@3/lib
 OS := $(shell uname -s)
 
 # Extra LDFLAGS if Solaris
@@ -18,10 +19,10 @@ ifeq ($(OS), SunOS)
 all: client server 
 
 client: client.c
-	$(CC) client.c -o nameChanger -lcrypto
+	$(CC) $(CFLAGS) $(LDFLAGS) client.c -o nameChanger -lcrypto
 
 server: server.c
-	$(CC) server.c -o changeServer -lcrypto
+	$(CC) $(CFLAGS) $(LDFLAGS) server.c -o changeServer -lcrypto
 
 clean:
 	    rm -f client server *.o

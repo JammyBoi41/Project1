@@ -1,7 +1,7 @@
 /*///////////////////////////////////////////////////////////
 *
 * FILE:		client.c
-* AUTHOR:	Your Name Here
+* AUTHOR:	Jamin Chung
 * PROJECT:	CNT 4007 Project 1 - Professor Traynor
 * DESCRIPTION:	Network Client Code
 *
@@ -47,23 +47,27 @@ int main(int argc, char *argv[])
     memset(&rcvBuf, 0, RCVBUFSIZE);
 
     /* Create a new TCP socket*/
-    /*	    FILL IN	*/
+    clientSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    
 
 
     /* Construct the server address structure */
-    /*	    FILL IN	 */
+    memset(&serv_addr, 0, sizeof(serv_addr)); //clears mem structure
+    serv_addr.sin_family = AF_INET; //addy family
+    serv_addr.sin_addr.s_addr = inet_addr("10.20.0.233"); //assign it (INADDR_ANY MAKES IT SO THAT YOU ACCEPT CONN FROM ANY IP ADDY)
+    serv_addr.sin_port = htons(80); //port
 
 
     /* Establish connecction to the server */
-    /*	    FILL IN	 */
-
+    connect(clientSock, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
     
     /* Send the string to the server */
-    /*	    FILL IN	 */
-
+    send(clientSock, studentName, strlen(studentName), 0);
 
     /* Receive and print response from the server */
-    /*	    FILL IN	 */
+    read(clientSock, rcvBuf, sizeof(rcvBuf) - 1);
+
+    printf("This is message: %s\n", rcvBuf);
 
     printf("%s\n", studentName);
     printf("Transformed input is: ");

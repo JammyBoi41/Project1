@@ -24,7 +24,6 @@
 /* The main function */
 int main(int argc, char *argv[])
 {
-
     int serverSock;				/* Server Socket */
     int clientSock;				/* Client Socket */
     struct sockaddr_in changeServAddr;		/* Local address */
@@ -40,23 +39,30 @@ int main(int argc, char *argv[])
 
 
     /* Create new TCP Socket for incoming requests*/
-    /*	    FILL IN	*/
+    serverSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     /* Construct local address structure*/
-    /*	    FILL IN	*/
+    //clear memory structure HERE
+    changeServAddr.sin_family = AF_INET;
+    changeServAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    changeServAddr.sin_port = htons(80);
+
     
     /* Bind to local address structure */
-    /*	    FILL IN	*/
+    bind(serverSock, (struct sockaddr * ) &changeServAddr, sizeof(changeServAddr));
+
 
     /* Listen for incoming connections */
-    /*	    FILL IN	*/
+    listen(serverSock, 10); //2nd arg is the MAX number of incoming conn.
 
     /* Loop server forever*/
     while(1)
     {
 
 	/* Accept incoming connection */
-	/*	FILL IN	    */
+    clientSock = accept(serverSock, (struct sockaddr * ) &changeClntAddr, &clntLen);
+    const char* message = "Fuck you";
+    send(clientSock, message, strlen(message), 0);
 
 	/* Extract Your Name from the packet, store in nameBuf */
 	/*	FILL IN	    */
@@ -75,7 +81,6 @@ int main(int argc, char *argv[])
 
 	/* Return md_value to client */
 	/*	FILL IN	    */
-
     }
 
 }
