@@ -63,23 +63,24 @@ int main(int argc, char *argv[])
     clientSock = accept(serverSock, (struct sockaddr * ) &changeClntAddr, &clntLen);
 
 	/* Extract Your Name from the packet, store in nameBuf */
-	/*	FILL IN	    */
+    read(clientSock, nameBuf, sizeof(nameBuf) - 1);
+	
 
 
 	/* Run this and return the final value in md_value to client */
 	/* Takes the client name and changes it */
 	/* Students should NOT touch this code */
-	  OpenSSL_add_all_digests();
-	  md = EVP_get_digestbyname("SHA256");
-	  mdctx = EVP_MD_CTX_create();
-	  EVP_DigestInit_ex(mdctx, md, NULL);
-	  EVP_DigestUpdate(mdctx, nameBuf, strlen(nameBuf));
-	  EVP_DigestFinal_ex(mdctx, md_value, &md_len);
-	  EVP_MD_CTX_destroy(mdctx);
+    OpenSSL_add_all_digests();
+    md = EVP_get_digestbyname("SHA256");
+    mdctx = EVP_MD_CTX_create();
+    EVP_DigestInit_ex(mdctx, md, NULL);
+    EVP_DigestUpdate(mdctx, nameBuf, strlen(nameBuf));
+    EVP_DigestFinal_ex(mdctx, md_value, &md_len);
+    EVP_MD_CTX_destroy(mdctx);
 
 	/* Return md_value to client */
 	/*	FILL IN	    */
-    send(clientSock, md_value, strlen(md_value), 0);
+    send(clientSock, md_value, md_len, 0);
     }
 
 }
