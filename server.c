@@ -1,7 +1,7 @@
 /*///////////////////////////////////////////////////////////
 *
 * FILE:		server.c
-* AUTHOR:	Your Name Here
+* AUTHOR:	Jamin Chung
 * PROJECT:	CNT 4007 Project 1 - Professor Traynor
 * DESCRIPTION:	Network Server Code
 *
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     //clear memory structure HERE
     changeServAddr.sin_family = AF_INET;
     changeServAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    changeServAddr.sin_port = htons(80);
+    changeServAddr.sin_port = htons(9090);
 
     
     /* Bind to local address structure */

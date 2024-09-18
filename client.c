@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     char *studentName;		    /* Your Name */
 
     char sndBuf[SNDBUFSIZE];	    /* Send Buffer */
-    char rcvBuf[RCVBUFSIZE];	    /* Receive Buffer */
+    unsigned char rcvBuf[RCVBUFSIZE];	    /* Receive Buffer */
     
     int i;			    /* Counter Value */
 
@@ -54,18 +54,24 @@ int main(int argc, char *argv[])
     /* Construct the server address structure */
     memset(&serv_addr, 0, sizeof(serv_addr)); //clears mem structure
     serv_addr.sin_family = AF_INET; //addy family
-    serv_addr.sin_addr.s_addr = inet_addr("10.20.0.233"); //assign it (INADDR_ANY MAKES IT SO THAT YOU ACCEPT CONN FROM ANY IP ADDY)
-    serv_addr.sin_port = htons(80); //port
+    // serv_addr.sin_addr.s_addr = inet_addr("10.20.0.233"); //assign it (INADDR_ANY MAKES IT SO THAT YOU ACCEPT CONN FROM ANY IP ADDY)
+    serv_addr.sin_port = htons(8080); //port
 
 
     /* Establish connecction to the server */
-    connect(clientSock, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+    if(connect(clientSock, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        return -1;
+    }
     
     /* Send the string to the server */
-    send(clientSock, studentName, strlen(studentName), 0);
+    if(send(clientSock, studentName, strlen(studentName), 0) < 0) {
+        return -1;
+    }
 
     /* Receive and print response from the server */
-    read(clientSock, rcvBuf, sizeof(rcvBuf) - 1);
+    if(recv(clientSock, rcvBuf, sizeof(rcvBuf) - 1, 0) < 0) {
+        return -1;
+    }
 
     printf("%s\n", studentName);
     printf("Transformed input is: ");
